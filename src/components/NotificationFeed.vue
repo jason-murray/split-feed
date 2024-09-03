@@ -74,7 +74,7 @@ setInterval(() => {
             }
 
             if (donation.donation_id <= lastDonation) {
-                break;
+                continue;
             }
 
             let notification = {

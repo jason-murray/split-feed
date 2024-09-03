@@ -69,11 +69,11 @@ setInterval(() => {
             let donation = data.references.donations[i];
 
             if (lastDonation == 0) {
-                lastDonation = donation.id;
+                lastDonation = donation.donation_id;
                 break;
             }
 
-            if (donation.id <= lastDonation) {
+            if (donation.donation_id <= lastDonation) {
                 break;
             }
 
@@ -87,7 +87,7 @@ setInterval(() => {
             };
 
             addNotification(notification);
-            lastDonation = donation.id;
+            lastDonation = donation.donation_id;
         }
     });
 }, 30000);

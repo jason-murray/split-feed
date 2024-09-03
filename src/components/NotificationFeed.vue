@@ -4,8 +4,8 @@ import { ref, onMounted } from 'vue'
 const notifications = ref([]);
 const topBox = ref(null);
 const notifyAudio = ref(null);
-const soundBtnLabel = ref('Enable Sound');
 const sound = ref(false);
+const fullscreen = ref(false);
 
 const url = new URL(window.location.href);
 const bearer = url.searchParams.get("bearer");
@@ -37,17 +37,22 @@ async function addNotification(notification) {
 
 }
 
-function toggleAudio(el) {
-
+function toggleAudio() {
     sound.value = !sound.value;
 
     if (sound.value) {
         notifyAudio.value.play();
-        soundBtnLabel.value = 'Disable Sound';
-    } else {
-        soundBtnLabel.value = 'Enable Sound';
     }
-    
+}
+
+function goFullscreen() {
+    fullscreen.value = !fullscreen.value;
+
+    if (document.fullscreenElement) {
+        document.exitFullscreen();
+    } else {
+        document.documentElement.requestFullscreen();
+    }
 }
 
 // gofundme notification
@@ -55,7 +60,7 @@ let lastDonation = 0;
 let gfmUrl = 'https://corsproxy.io/?' + encodeURIComponent(`https://gateway.gofundme.com/web-gateway/v1/feed/${gfm}/donations?limit=10`);
 
 setInterval(() => {
-    fetch(gfmUrl)
+    fetch(gfmUrl + encodeURIComponent('&t=' + Date.now()))
     .then(response => response.json())
     .then(data => {
 
@@ -501,7 +506,14 @@ if(debug) {
         <source src="/notify.wav" type="audio/wav">
         Your browser does not support the audio element.
     </audio>
-    <button @click="toggleAudio" class="bg-purple-700 hover:bg-purple-800 text-white font-bold py-2 px-4 rounded-full m-4 absolute z-40 right-3 top-0 drop-shadow-lg">{{ soundBtnLabel }}</button>
+    <button @click="toggleAudio" class="svg bg-purple-700 hover:bg-purple-800 text-white font-bold p-2 rounded-full absolute z-40 right-[55px] top-[10px] drop-shadow-lg">
+        <svg v-if="sound" height="30px" width="30px" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg"><rect fill="none" height="256" width="256"/><path d="M155.5,24.8a8,8,0,0,0-8.4.9L77.2,80H32A16,16,0,0,0,16,96v64a16,16,0,0,0,16,16H77.2l69.9,54.3A7.9,7.9,0,0,0,152,232a8.5,8.5,0,0,0,3.5-.8A8,8,0,0,0,160,224V32A8,8,0,0,0,155.5,24.8Z"/><path d="M192,96a8,8,0,0,0-8,8v48a8,8,0,0,0,16,0V104A8,8,0,0,0,192,96Z"/><path d="M224,80a8,8,0,0,0-8,8v80a8,8,0,0,0,16,0V88A8,8,0,0,0,224,80Z"/></svg>
+        <svg v-else height="30px" width="30px" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg"><rect fill="none" height="256" width="256"/><path d="M192,160a8,8,0,0,0,8-8V104a8,8,0,0,0-16,0v48A8,8,0,0,0,192,160Z"/><path d="M224,80a8,8,0,0,0-8,8v80a8,8,0,0,0,16,0V88A8,8,0,0,0,224,80Z"/><path d="M53.9,34.6A8,8,0,0,0,42.1,45.4L73.6,80H32A16,16,0,0,0,16,96v64a16,16,0,0,0,16,16H77.3l69.8,54.3A8.1,8.1,0,0,0,152,232a8.5,8.5,0,0,0,3.5-.8A8,8,0,0,0,160,224V175.1l42.1,46.3A8,8,0,0,0,208,224a8.2,8.2,0,0,0,5.4-2.1,7.9,7.9,0,0,0,.5-11.3Z"/><path d="M146.1,112.2a7.9,7.9,0,0,0,5.9,2.6,7.4,7.4,0,0,0,2.9-.5,8,8,0,0,0,5.1-7.5V32a8,8,0,0,0-12.9-6.3l-39.9,31a8.1,8.1,0,0,0-1,11.7Z"/></svg>
+    </button>
+    <button @click="goFullscreen" class="svg bg-purple-700 hover:bg-purple-800 text-white font-bold p-2 rounded-full absolute top-[10px] right-[2px] p-2 cursor-pointer z-40">
+        <svg v-if="fullscreen" xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" viewBox="0 0 16 16" fill="none"><g clip-path="url(#clip0_1450_2221)"><path d="M5.5 1.49909L4.19671 2.8L1.41658 0L0 1.41657L2.80003 4.2L1.5 5.5L2 6H6L6 2L5.5 1.49909Z"/><path d="M14.5009 5.5L13.2 4.19671L16 1.41658L14.5834 0L11.8 2.80003L10.5 1.5L10 2V6L14 6L14.5009 5.5Z"/><path d="M2.8 11.8033L1.49909 10.5L2 10L6 10L6 14L5.5 14.5L4.2 13.2L1.41657 16L0 14.5834L2.8 11.8033Z"/><path d="M10.5 14.5009L11.8033 13.2L14.5834 16L16 14.5834L13.2 11.8L14.5 10.5L14 10H10L10 14L10.5 14.5009Z"/></g><defs><clipPath id="clip0_1450_2221"><rect width="16" height="16"/></clipPath></defs></svg>
+        <svg v-else height="30px" width="30px" version="1.1" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" xmlns:xlink="http://www.w3.org/1999/xlink"><title/><desc/><defs/><g fill="none" fill-rule="evenodd" id="Page-1" stroke="none" stroke-width="1"><g fill="#FFFFFF" id="Core" transform="translate(-215.000000, -257.000000)"><g id="fullscreen" transform="translate(215.000000, 257.000000)"><path d="M2,9 L0,9 L0,14 L5,14 L5,12 L2,12 L2,9 L2,9 Z M0,5 L2,5 L2,2 L5,2 L5,0 L0,0 L0,5 L0,5 Z M12,12 L9,12 L9,14 L14,14 L14,9 L12,9 L12,12 L12,12 Z M9,0 L9,2 L12,2 L12,5 L14,5 L14,0 L9,0 L9,0 Z" id="Shape"/></g></g></g></svg>
+    </button>
     <div class="notifications h-full flex flex-col justify-end">
         <TransitionGroup name="notification" tag="div">
         <div v-for="notification in notifications" :key="notification.id" :class="notification.type + ' border' + notification.color" class="bg-slate-800 rounded-lg p-2 mb-3 w-full border-2">

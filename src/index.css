@@ -50,6 +50,10 @@
     flex-grow: 1;
 }
 
+.svg svg {
+    fill: #fff;
+}
+
 .chat-frame {
     height: 10000px;
     width: 100%;

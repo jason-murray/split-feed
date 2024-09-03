@@ -129,10 +129,6 @@ function subscribe_to_events(session_id) {
 const processMessages = function (event) {
   const message = JSON.parse(event.data);
 
-  if (message.metadata.message_type != 'session_keepalive') {
-    console.log(message);
-  }
-
   switch (message.metadata.message_type) {
     case 'session_welcome':
         if (i == 0) {
@@ -145,6 +141,7 @@ const processMessages = function (event) {
     case 'session_reconnect':
         i++;
         ws[i] = new WebSocket(message.payload.session.reconnect_url);
+        console.log('Reconnecting to ' + message.payload.session.reconnect_url);
         break;
     case 'notification':
 
@@ -416,10 +413,6 @@ if(debug) {
             // random chance to process message
             if (Math.random() > 0.25) {
                 continue;
-            }
-
-            if (message.metadata.message_type != 'session_keepalive') {
-                console.log(message);
             }
 
             switch (message.metadata.message_type) {

@@ -75,7 +75,7 @@ onMounted(() => {
     if(!device.mobile()){
       return;
     }
-    
+
     if (newOrientation === "landscape") {
       top.scrollTop = top.scrollHeight;
       top.style.height = '';
@@ -98,7 +98,7 @@ onMounted(() => {
       </div>
       <div class="resize"></div>
       <div class="bottom">
-        <!-- <ChatFeed /> -->
+        <ChatFeed />
       </div>
     </div>
   </main>

@@ -49,8 +49,8 @@ function toggleAudio(el) {
 }
 
 // connect to twitch via websockets wss://eventsub.wss.twitch.tv/ws
-//const ws = new WebSocket('wss://eventsub.wss.twitch.tv/ws');
-const ws = new WebSocket('wss://example.com/ws');
+const ws = new WebSocket('wss://eventsub.wss.twitch.tv/ws');
+//const ws = new WebSocket('wss://example.com/ws');
 
 function subscribe_to_events(session_id) {
     fetch('https://api.twitch.tv/helix/eventsub/subscriptions', {

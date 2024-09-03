@@ -6,7 +6,7 @@ const iframeSrc = ref("");
 const chatScrollContainer = ref(null);
 
 const url = new URL(window.location.href);
-const channel = url.searchParams.get("channel");
+const channel = url.searchParams.get("channel") ?? 'pablogz205';
 const size = url.searchParams.get("size") ?? 1;
 const font = url.searchParams.get("font") ?? 1;
 iframeSrc.value = `https://www.giambaj.it/twitch/jchat/v2/?channel=${channel}&size=${size}&font=${font}`;

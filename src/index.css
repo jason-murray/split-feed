@@ -1,0 +1,107 @@
+/* ./src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.resizeable-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.top,
+.bottom {
+    overflow: hidden;
+    display: grid;
+    align-items: center;
+}
+
+.top {
+    flex-shrink: 0;
+    padding: 12px;
+    overflow-y: auto;
+}
+
+.resize {
+    background: #444857;
+    height: 25px;
+    width: 100%;
+    cursor: row-resize;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 10;
+    user-select: none;
+}
+
+.resize::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 15px;
+    height: 6px;
+    top: 13px;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+}
+
+.bottom {
+    flex-grow: 1;
+}
+
+.chat-frame {
+    height: 10000px;
+    width: 100%;
+    border: none;
+}
+
+.chat-scroll-container {
+    max-height: 100%;
+    overflow-y: auto;
+}
+
+.notifications > div > div {
+    opacity: 0.5;
+    overflow-anchor: none;
+    transition: all 1s ease;
+}
+
+.notifications > div > div:last-of-type {
+    opacity: 1;
+}
+
+.notification-enter-active,
+.notificationlist-leave-active {
+  transition: all 0.5s ease;
+}
+.notification-enter-from,
+.notification-leave-to {
+  opacity: 0;
+  transform: translateX(-60px);
+}
+
+.notify-pill-nobg {
+    @apply mr-2 rounded-full px-2 py-1 text-white font-bold text-center leading-none;
+}
+
+.notify-pill {
+    @apply notify-pill-nobg bg-gray-950;
+}
+
+.mobile.landscape {
+    .resizeable-container {
+        flex-direction: row;
+    }
+
+    .resize {
+        height: 100%;
+        width: 25px;
+    }
+
+    .resize::before {
+        top: 50%;
+        left: 2px;
+        rotate: 90deg;
+    }
+}

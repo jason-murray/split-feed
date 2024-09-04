@@ -94,13 +94,14 @@ onMounted(async () => {
   let wakeLock = null;
 
   // create an async function to request a wake lock
-  try {
-    wakeLock = await navigator.wakeLock.request("screen");
-    alert("Wake Lock is active!");
-  } catch (err) {
-    // The Wake Lock request has failed - usually system related, such as battery.
-    alert(`${err.name}, ${err.message}`);
-  }
+  setInterval(async () => {
+    try {
+      wakeLock = await navigator.wakeLock.request("screen");
+    } catch (err) {
+      // The Wake Lock request has failed - usually system related, such as battery.
+      console.log(`${err.name}, ${err.message}`);
+    }
+  }, 10000);
 })
 
 </script>

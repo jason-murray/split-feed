@@ -263,7 +263,103 @@ if(debug) {
                 "message_id": "d6deea58-ce6e-4217-905d-67670369b628",
                 "source_message_id": null,
                 "message": {
-                    "text": "what do you think about the mclaren?",
+                    "text": "",
+                    "fragments": [
+                        {
+                            "type": "text",
+                            "text": "what do you think about the mclaren?",
+                            "cheermote": null,
+                            "emote": null,
+                            "mention": null
+                        }
+                    ]
+                },
+                "notice_type": "resub",
+                "sub": null,
+                "resub": {
+                    "cumulative_months": 9,
+                    "duration_months": 9,
+                    "streak_months": null,
+                    "sub_tier": "1000",
+                    "is_prime": false,
+                    "is_gift": false,
+                    "gifter_is_anonymous": null,
+                    "gifter_user_id": null,
+                    "gifter_user_name": null,
+                    "gifter_user_login": null
+                },
+                "sub_gift": null,
+                "community_sub_gift": null,
+                "gift_paid_upgrade": null,
+                "prime_paid_upgrade": null,
+                "pay_it_forward": null,
+                "raid": null,
+                "unraid": null,
+                "announcement": null,
+                "bits_badge_tier": null,
+                "charity_donation": null,
+                "shared_chat_sub": null,
+                "shared_chat_resub": null,
+                "shared_chat_sub_gift": null,
+                "shared_chat_community_sub_gift": null,
+                "shared_chat_gift_paid_upgrade": null,
+                "shared_chat_prime_paid_upgrade": null,
+                "shared_chat_pay_it_forward": null,
+                "shared_chat_raid": null,
+                "shared_chat_announcement": null
+            }
+        }
+    },
+    {
+        "metadata": {
+            "message_id": "GD60uGl4b-rsculGOvnG3CbfWub8sU0-kLka5QQTklE=",
+            "message_type": "notification",
+            "message_timestamp": "2024-09-02T16:45:07.795455639Z",
+            "subscription_type": "channel.chat.notification",
+            "subscription_version": "1"
+        },
+        "payload": {
+            "subscription": {
+                "id": "8bfaa271-dacf-45ad-9252-82961b8e4558",
+                "status": "enabled",
+                "type": "channel.chat.notification",
+                "version": "1",
+                "condition": {
+                    "broadcaster_user_id": "171093413",
+                    "user_id": "54096715"
+                },
+                "transport": {
+                    "method": "websocket",
+                    "session_id": "AgoQZGprB1c1S96FME9t0ZuU4hIGY2VsbC1j"
+                },
+                "created_at": "2024-09-02T16:42:14.02277498Z",
+                "cost": 0
+            },
+            "event": {
+                "broadcaster_user_id": "171093413",
+                "broadcaster_user_login": "pablogz205",
+                "broadcaster_user_name": "PabloGz205",
+                "source_broadcaster_user_id": null,
+                "source_broadcaster_user_login": null,
+                "source_broadcaster_user_name": null,
+                "chatter_user_id": "54492353",
+                "chatter_user_login": "keepcalmcallsoul",
+                "chatter_user_name": "keepcalmcallsoul",
+                "chatter_is_anonymous": false,
+                "color": "#8A2BE2",
+                "badges": [
+                    {
+                        "set_id": "subscriber",
+                        "id": "9",
+                        "info": "9"
+                    }
+                ],
+                "source_badges": null,
+                "system_message": "keepcalmcallsoul subscribed at Tier 1. They've subscribed for 9 months!",
+                "message_id": "d6deea58-ce6e-4217-905d-67670369b628",
+                "source_message_id": null,
+                "message": {
+                    "text": "poggy doggy",
                     "fragments": [
                         {
                             "type": "text",
@@ -523,7 +619,7 @@ if(debug) {
                 </div>
             </div>
             <div class="font-bold text-xl mt-1">{{ notification.raider || notification.user }}</div>
-            <div class="text-lg">{{ notification.text || notification.type == "sub_gift" ? "Gifted to " + notification.recipient : '' }}</div>
+            <div class="text-lg">{{ notification.text || (notification.type == "sub_gift" ? "Gifted to " + notification.recipient : '') }}</div>
         </div>
         </TransitionGroup>
     </div>

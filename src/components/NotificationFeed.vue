@@ -434,6 +434,7 @@ if(debug) {
 
                 let notification = {
                     id: message.metadata.message_id,
+                    type: message.payload.event.notice_type,
                     user: message.payload.event.chatter_user_name,
                     text: message.payload.event.message.text ?? ''
                 };
@@ -471,6 +472,7 @@ if(debug) {
                         notification.tts        = `${notification.user} gifted a tier ${notification.tier} sub to ${notification.recipient}`;
                         break;
                     case 'community_sub_gift':
+                        notification.type       = 'sub_gift';
                         notification.nice_name  = 'Gift x' + message.payload.event[eventType].total;
                         notification.text       = 'Gifted ' + message.payload.event[eventType].total + ' subs';
                         notification.tts        = `${notification.user} gifted ${message.payload.event[eventType].total} subs`;
@@ -521,7 +523,7 @@ if(debug) {
                 </div>
             </div>
             <div class="font-bold text-xl mt-1">{{ notification.raider || notification.user }}</div>
-            <div class="text-lg">{{ notification.text || "Gifted to " + notification.recipient }}</div>
+            <div class="text-lg">{{ notification.text || notification.type == "sub_gift" ? "Gifted to " + notification.recipient : '' }}</div>
         </div>
         </TransitionGroup>
     </div>

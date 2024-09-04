@@ -103,7 +103,7 @@ let i = 0;
 ws[i] = debug ? new WebSocket('wss://example.com') : new WebSocket('wss://eventsub.wss.twitch.tv/ws?keepalive_timeout_seconds=10');
 
 function subscribe_to_events(session_id) {
-    
+
     fetch('https://api.twitch.tv/helix/eventsub/subscriptions', {
         method: 'POST',
         headers: {
@@ -124,7 +124,7 @@ function subscribe_to_events(session_id) {
             }
         })
     }).then(response => response.json())
-    .then(data => console.log(data));
+        .then(data => console.log(data));
 }
 
 let wsAliveInt = 0;

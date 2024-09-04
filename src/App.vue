@@ -5,15 +5,15 @@ import device from "current-device";
 import NotificationFeed from './components/NotificationFeed.vue'
 import ChatFeed from './components/ChatFeed.vue'
 
+const containerRef = ref(null);
+const topRef = ref(null);
+const resizeRef = ref(null);
+
 onMounted(() => {
 
-  var resize = document.querySelector(".resize");
-  var top = document.querySelector(".top");
-  var container = document.querySelector(".resizeable-container");
+  let drag = false;
 
-  var drag = false;
-
-  var move = 0;
+  let move = 0;
 
   function interactStart (e) {
     drag = true;
@@ -43,9 +43,9 @@ onMounted(() => {
 
     if (drag) {
         if (device.mobile() && device.landscape()) {
-          top.style.width = move - resize.getBoundingClientRect().width / 2 + "px";
+          topRef.value.style.width = move - resizeRef.value.getBoundingClientRect().width / 2 + "px";
         } else {
-          top.style.height = move - resize.getBoundingClientRect().height / 2 + "px";
+          topRef.value.style.height = move - resizeRef.value.getBoundingClientRect().height / 2 + "px";
         }
         e.preventDefault();
     }
@@ -55,20 +55,24 @@ onMounted(() => {
     drag = false;
   }
 
-  resize.addEventListener("mousedown", interactStart);
-  resize.addEventListener("touchstart", interactStart);
+  resizeRef.value.addEventListener("mousedown", interactStart);
+  resizeRef.value.addEventListener("touchstart", interactStart);
 
-  container.addEventListener("mousemove", interactMove);
-  container.addEventListener("touchmove", interactMove);
+  containerRef.value.addEventListener("mousemove", interactMove);
+  containerRef.value.addEventListener("touchmove", interactMove);
 
-  container.addEventListener("mouseup", interactEnd);
-  container.addEventListener("touchend", interactEnd);
+  containerRef.value.addEventListener("mouseup", interactEnd);
+  containerRef.value.addEventListener("touchend", interactEnd);
 
   if (device.mobile() && device.landscape()) {
-    top.style.width = window.innerWidth / 2 + "px";
+    topRef.value.style.width = window.innerWidth / 2 + "px";
   } else {
-    top.style.height = window.innerHeight / 3 + "px";
+    topRef.value.style.height = window.innerHeight / 3 + "px";
   }
+
+  // scroll chat-scroll-container to bottom
+  let chatScrollContainer = document.querySelector(".chat-scroll-container");
+  chatScrollContainer.scrollTop = chatScrollContainer.scrollHeight;
 
   // Scroll to bottom on orientation change
   device.onChangeOrientation(newOrientation => {
@@ -77,12 +81,12 @@ onMounted(() => {
     }
 
     if (newOrientation === "landscape") {
-      top.scrollTop = top.scrollHeight;
-      top.style.height = '';
-      top.style.width = window.innerHeight / 2 + "px";
+      topRef.value.scrollTop = topRef.value.scrollHeight;
+      topRef.value.style.height = '';
+      topRef.value.style.width = window.innerHeight / 2 + "px";
     } else {
-      top.style.width = '';
-      top.style.height = window.innerWidth / 3 + "px";
+      topRef.value.style.width = '';
+      topRef.value.style.height = window.innerWidth / 3 + "px";
     }
   });
 
@@ -92,11 +96,11 @@ onMounted(() => {
 
 <template>
   <main class="h-dvh">
-    <div class="resizeable-container">
-      <div class="top">
+    <div class="resizeable-container" ref="containerRef">
+      <div class="top flex-shrink-0 overflow-y-auto px-3" ref="topRef">
         <NotificationFeed />
       </div>
-      <div class="resize"></div>
+      <div class="resize" ref="resizeRef"></div>
       <div class="bottom">
         <ChatFeed />
       </div>

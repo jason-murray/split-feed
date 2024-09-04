@@ -9,7 +9,7 @@ const containerRef = ref(null);
 const topRef = ref(null);
 const resizeRef = ref(null);
 
-onMounted(() => {
+onMounted(async () => {
 
   let drag = false;
 
@@ -90,6 +90,17 @@ onMounted(() => {
     }
   });
 
+  // Create a reference for the Wake Lock.
+  let wakeLock = null;
+
+  // create an async function to request a wake lock
+  try {
+    wakeLock = await navigator.wakeLock.request("screen");
+    alert("Wake Lock is active!");
+  } catch (err) {
+    // The Wake Lock request has failed - usually system related, such as battery.
+    alert(`${err.name}, ${err.message}`);
+  }
 })
 
 </script>

@@ -195,7 +195,7 @@ const processMessages = function (event) {
             case 'raid':
                 notification.color      = '-purple-600';
                 notification.nice_name  = 'Raid x' + message.payload.event[eventType].viewer_count;
-                notification.raider     = message.payload.event[eventType].user_name;
+                notification.raider     = message.payload.event[eventType].user_name + ' raided with ' + message.payload.event[eventType].viewer_count + ' viewers';
                 notification.tts        = `${notification.raider} raided with ${message.payload.event[eventType].viewer_count} viewers`;
                 break;
         }

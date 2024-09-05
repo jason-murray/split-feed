@@ -19,6 +19,7 @@ onMounted(() => {
 async function addNotification(notification) {
 
     notification.time = new Date();
+    notification.time_since = 0;
 
     await notifications.value.push(notification);
 
@@ -99,6 +100,13 @@ setInterval(() => {
             }
         });
 }, 30000);
+
+// loop notifications every 1 minute to updated time since
+setInterval(() => {
+    for (let notification of notifications.value) {
+        notification.time_since++;
+    }
+}, 1000);
 
 // connect to twitch via websockets wss://eventsub.wss.twitch.tv/ws
 let ws = [];
@@ -518,14 +526,18 @@ if (debug) {
         }
     }];
 
+    let j = 0;
     setInterval(() => {
 
         for (let message of messages) {
 
             // random chance to process message
-            if (Math.random() > 0.25) {
+            //if (Math.random() > 0.25) {
+            if (j > 1) {
                 continue;
             }
+
+            j++;
 
             switch (message.metadata.message_type) {
                 case 'session_welcome':
@@ -681,7 +693,7 @@ if (debug) {
                     <div v-if="notification.user_total" class="notify-pill">{{ notification.user_total }} total
                     </div>
                     <!-- show time since notification in minutes -->
-                    <div class="notify-time">{{ Math.floor((new Date() - new Date(notification.time)) / 60000) }} mins</div>
+                    <div class="notify-time">{{ notification.time_since < 60 ? notification.time_since + ' secs' : Math.floor(notification.time_since / 60) + ' mins' }}</div>
                 </div>
                 <div class="font-bold text-xl mt-1">{{ notification.raider || notification.user }}</div>
                 <div class="text-lg">{{ notification.text || (notification.type == "sub_gift" ? "Gifted to " +

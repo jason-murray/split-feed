@@ -114,6 +114,11 @@
     @apply notify-pill-nobg bg-gray-950;
 }
 
+.notify-time {
+    @apply text-gray-400 font-bold text-center leading-none;
+    margin-left: auto;
+}
+
 .mobile.landscape {
     .resizeable-container {
         flex-direction: row;

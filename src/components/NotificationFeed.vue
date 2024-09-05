@@ -17,6 +17,9 @@ onMounted(() => {
 })
 
 async function addNotification(notification) {
+
+    notification.time = new Date();
+
     await notifications.value.push(notification);
 
     topBox.value.scrollTo({
@@ -670,15 +673,15 @@ if (debug) {
                 class="bg-slate-800 rounded-lg p-2 mb-3 w-full border-2">
                 <!-- create pills for all possible notification properties -->
                 <div class="flex justify-between">
-                    <div class="flex items-center">
-                        <div v-if="notification.nice_name" :class="'bg' + notification.color" class="notify-pill-nobg">
-                            {{ notification.nice_name }}</div>
-                        <div v-if="notification.tier" class="notify-pill">Tier {{ notification.tier }}</div>
-                        <div v-if="notification.months" class="notify-pill">{{ notification.months }} months</div>
-                        <div v-if="notification.is_prime" class="notify-pill">Prime</div>
-                        <div v-if="notification.user_total" class="notify-pill">{{ notification.user_total }} total
-                        </div>
+                    <div v-if="notification.nice_name" :class="'bg' + notification.color" class="notify-pill-nobg">
+                        {{ notification.nice_name }}</div>
+                    <div v-if="notification.tier" class="notify-pill">Tier {{ notification.tier }}</div>
+                    <div v-if="notification.months" class="notify-pill">{{ notification.months }} months</div>
+                    <div v-if="notification.is_prime" class="notify-pill">Prime</div>
+                    <div v-if="notification.user_total" class="notify-pill">{{ notification.user_total }} total
                     </div>
+                    <!-- show time since notification in minutes -->
+                    <div class="notify-time">{{ Math.floor((new Date() - new Date(notification.time)) / 60000) }} mins</div>
                 </div>
                 <div class="font-bold text-xl mt-1">{{ notification.raider || notification.user }}</div>
                 <div class="text-lg">{{ notification.text || (notification.type == "sub_gift" ? "Gifted to " +

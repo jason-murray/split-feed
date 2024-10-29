@@ -532,8 +532,8 @@ if (debug) {
         for (let message of messages) {
 
             // random chance to process message
-            //if (Math.random() > 0.25) {
-            if (j > 1) {
+            if (Math.random() > 0.25) {
+            //if (j > 1) {
                 continue;
             }
 

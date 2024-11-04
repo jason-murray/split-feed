@@ -36,6 +36,7 @@ async function addNotification(notification) {
         var msg = new SpeechSynthesisUtterance(notification.tts);
         msg.pitch = 1;
         msg.rate = 1;
+        msg.volume = 1;
         window.speechSynthesis.speak(msg);
     }
 
